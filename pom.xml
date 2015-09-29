@@ -17,6 +17,7 @@
 		<module>conditional</module>
 		<module>events</module>
 		<module>security</module>
+		<module>es6</module>
 	</modules>
 
 </project>
