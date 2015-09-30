@@ -1,8 +1,8 @@
 var React = require('react');
 
-var UpdateDialog = React.createClass({
+class UpdateDialog extends React.Component {
 
-    handleSubmit: function (e) {
+    handleSubmit(e) {
         e.preventDefault();
         var updatedEmployee = {};
         this.props.attributes.forEach(attribute => {
@@ -10,9 +10,9 @@ var UpdateDialog = React.createClass({
         });
         this.props.onUpdate(this.props.employee, updatedEmployee);
         window.location = "#";
-    },
+    }
 
-    render: function () {
+    render() {
         var inputs = this.props.attributes.map(attribute =>
                 <p key={this.props.employee.entity[attribute]}>
                     <input type="text" placeholder={attribute}
@@ -35,7 +35,7 @@ var UpdateDialog = React.createClass({
 
                         <form>
                             {inputs}
-                            <button onClick={this.handleSubmit}>Update</button>
+                            <button onClick={this.handleSubmit.bind(this)}>Update</button>
                         </form>
                     </div>
                 </div>
@@ -43,6 +43,6 @@ var UpdateDialog = React.createClass({
         )
     }
 
-});
+};
 
 module.exports = UpdateDialog;

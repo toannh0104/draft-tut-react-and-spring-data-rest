@@ -12,8 +12,14 @@ var root = '/api';
 var CreateDialog = require('./create-dialog');
 var EmployeeList = require('./employee-list');
 
-var App = React.createClass({
-    loadFromServer: function (pageSize) {
+class App extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {page: {}, employees: [], attributes: [], pageSize: 2, links: {}};
+    }
+
+    loadFromServer(pageSize) {
         follow(client, root, [
                 {rel: 'employees', params: {size: pageSize}}]
         ).then(employeeCollection => {
@@ -61,9 +67,10 @@ var App = React.createClass({
                     links: this.links
                 });
             });
-    },
+    }
+
     // tag::on-create[]
-    onCreate: function (newEmployee) {
+    onCreate(newEmployee) {
         follow(client, root, ['employees']).done(response => {
             client({
                 method: 'POST',
@@ -72,10 +79,11 @@ var App = React.createClass({
                 headers: {'Content-Type': 'application/json'}
             })
         })
-    },
+    }
     // end::on-create[]
+
     // tag::on-update[]
-    onUpdate: function (employee, updatedEmployee) {
+    onUpdate(employee, updatedEmployee) {
         client({
             method: 'PUT',
             path: employee.entity._links.self.href,
@@ -96,10 +104,11 @@ var App = React.createClass({
                     '. Your copy is stale.');
             }
         });
-    },
+    }
     // end::on-update[]
+
     // tag::on-delete[]
-    onDelete: function (employee) {
+    onDelete(employee) {
         client({method: 'DELETE', path: employee.entity._links.self.href}
         ).done(response => {/* let the websocket handle updating the UI */},
                 response => {
@@ -108,9 +117,10 @@ var App = React.createClass({
                         employee.entity._links.self.href);
                 }
             });
-    },
+    }
     // end::on-delete[]
-    onNavigate: function (navUri) {
+
+    onNavigate(navUri) {
         client({
             method: 'GET',
             path: navUri
@@ -135,23 +145,25 @@ var App = React.createClass({
                 links: this.links
             });
         });
-    },
-    updatePageSize: function (pageSize) {
+    }
+
+    updatePageSize(pageSize) {
         if (pageSize !== this.state.pageSize) {
             this.loadFromServer(pageSize);
         }
-    },
+    }
+
     // tag::websocket-handlers[]
-    refreshAndGoToLastPage: function (message) {
+    refreshAndGoToLastPage(message) {
         follow(client, root, [{
             rel: 'employees',
             params: {size: this.state.pageSize}
         }]).done(response => {
             this.onNavigate(response.entity._links.last.href);
         })
-    },
+    }
 
-    refreshCurrentPage: function (message) {
+    refreshCurrentPage(message) {
         follow(client, root, [{
             rel: 'employees',
             params: {
@@ -179,22 +191,21 @@ var App = React.createClass({
                 links: this.links
             });
         });
-    },
+    }
     // end::websocket-handlers[]
-    getInitialState: function () {
-        return ({page: {}, employees: [], attributes: [], pageSize: 2, links: {}});
-    },
+
     // tag::register-handlers[]
-    componentDidMount: function () {
+    componentDidMount() {
         this.loadFromServer(this.state.pageSize);
         stompClient.register([
             {route: '/topic/newEmployee', callback: this.refreshAndGoToLastPage},
             {route: '/topic/updateEmployee', callback: this.refreshCurrentPage},
             {route: '/topic/deleteEmployee', callback: this.refreshCurrentPage}
         ]);
-    },
+    }
     // end::register-handlers[]
-    render: function () {
+
+    render() {
         return (
             <div>
                 <CreateDialog attributes={this.state.attributes} onCreate={this.onCreate}/>
@@ -210,10 +221,10 @@ var App = React.createClass({
             </div>
         )
     }
-})
+};
 
 React.render(
     <App />,
     document.getElementById('react')
-)
+);
 

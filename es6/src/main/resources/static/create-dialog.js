@@ -1,7 +1,8 @@
 var React = require('react');
 
-var CreateDialog = React.createClass({
-    handleSubmit: function (e) {
+class CreateDialog extends React.Component{
+
+    handleSubmit(e) {
         e.preventDefault();
         var newEmployee = {};
         this.props.attributes.forEach(attribute => {
@@ -12,8 +13,9 @@ var CreateDialog = React.createClass({
             React.findDOMNode(this.refs[attribute]).value = ''; // clear out the dialog's inputs
         });
         window.location = "#";
-    },
-    render: function () {
+    }
+
+    render() {
         var inputs = this.props.attributes.map(attribute =>
                 <p key={attribute}>
                     <input type="text" placeholder={attribute} ref={attribute} className="field" />
@@ -31,13 +33,14 @@ var CreateDialog = React.createClass({
 
                         <form>
                             {inputs}
-                            <button onClick={this.handleSubmit}>Create</button>
+                            <button onClick={this.handleSubmit.bind(this)}>Create</button>
                         </form>
                     </div>
                 </div>
             </div>
         )
     }
-})
 
-module.exports = CreateDialog
+};
+
+module.exports = CreateDialog;
