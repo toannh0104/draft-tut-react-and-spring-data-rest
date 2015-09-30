@@ -8,7 +8,7 @@ module.exports = {
     debug: true,
     output: {
         path: __dirname,
-        filename: './bundle.js'
+        filename: './built/bundle.js'
     },
     module: {
         loaders: [
