@@ -16,7 +16,6 @@ class App extends React.Component {
 
     constructor(props) {
         super(props);
-        console.log('Initializing state...');
         this.state = {
             page: {},
             employees: [],
