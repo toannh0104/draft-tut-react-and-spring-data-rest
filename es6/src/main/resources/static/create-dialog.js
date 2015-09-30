@@ -1,10 +1,10 @@
-var React = require('react');
+const React = require('react');
 
 class CreateDialog extends React.Component{
 
     handleSubmit(e) {
         e.preventDefault();
-        var newEmployee = {};
+        const newEmployee = {};
         this.props.attributes.forEach(attribute => {
             newEmployee[attribute] = React.findDOMNode(this.refs[attribute]).value.trim();
         });
@@ -16,7 +16,7 @@ class CreateDialog extends React.Component{
     }
 
     render() {
-        var inputs = this.props.attributes.map(attribute =>
+        const inputs = this.props.attributes.map(attribute =>
                 <p key={attribute}>
                     <input type="text" placeholder={attribute} ref={attribute} className="field" />
                 </p>

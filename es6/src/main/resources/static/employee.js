@@ -1,6 +1,6 @@
-var React = require('react');
+const React = require('react');
 
-var UpdateDialog = require('./update-dialog');
+const UpdateDialog = require('./update-dialog');
 
 // tag::employee[]
 class Employee extends React.Component {

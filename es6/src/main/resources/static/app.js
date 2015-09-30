@@ -1,22 +1,29 @@
 'use strict';
 
-var React = require('react');
-var when = require('when');
-var client = require('./client');
-var follow = require('./follow');
+const React = require('react');
+const when = require('when');
+const client = require('./client');
+const follow = require('./follow');
 
-var stompClient = require('./websocket-listener');
+const stompClient = require('./websocket-listener');
 
-var root = '/api';
+const root = '/api';
 
-var CreateDialog = require('./create-dialog');
-var EmployeeList = require('./employee-list');
+const CreateDialog = require('./create-dialog');
+const EmployeeList = require('./employee-list');
 
 class App extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {page: {}, employees: [], attributes: [], pageSize: 2, links: {}};
+        console.log('Initializing state...');
+        this.state = {
+            page: {},
+            employees: [],
+            attributes: [],
+            pageSize: 2,
+            links: {}
+        };
     }
 
     loadFromServer(pageSize) {
@@ -198,9 +205,9 @@ class App extends React.Component {
     componentDidMount() {
         this.loadFromServer(this.state.pageSize);
         stompClient.register([
-            {route: '/topic/newEmployee', callback: this.refreshAndGoToLastPage},
-            {route: '/topic/updateEmployee', callback: this.refreshCurrentPage},
-            {route: '/topic/deleteEmployee', callback: this.refreshCurrentPage}
+            {route: '/topic/newEmployee', callback: this.refreshAndGoToLastPage.bind(this)},
+            {route: '/topic/updateEmployee', callback: this.refreshCurrentPage.bind(this)},
+            {route: '/topic/deleteEmployee', callback: this.refreshCurrentPage.bind(this)}
         ]);
     }
     // end::register-handlers[]
@@ -208,16 +215,16 @@ class App extends React.Component {
     render() {
         return (
             <div>
-                <CreateDialog attributes={this.state.attributes} onCreate={this.onCreate}/>
+                <CreateDialog attributes={this.state.attributes} onCreate={this.onCreate.bind(this)}/>
                 <EmployeeList page={this.state.page}
                               employees={this.state.employees}
                               links={this.state.links}
                               pageSize={this.state.pageSize}
                               attributes={this.state.attributes}
-                              onNavigate={this.onNavigate}
-                              onUpdate={this.onUpdate}
-                              onDelete={this.onDelete}
-                              updatePageSize={this.updatePageSize}/>
+                              onNavigate={this.onNavigate.bind(this)}
+                              onUpdate={this.onUpdate.bind(this)}
+                              onDelete={this.onDelete.bind(this)}
+                              updatePageSize={this.updatePageSize.bind(this)}/>
             </div>
         )
     }

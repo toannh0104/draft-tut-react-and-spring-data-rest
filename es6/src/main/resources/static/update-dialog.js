@@ -1,10 +1,10 @@
-var React = require('react');
+const React = require('react');
 
 class UpdateDialog extends React.Component {
 
     handleSubmit(e) {
         e.preventDefault();
-        var updatedEmployee = {};
+        const updatedEmployee = {};
         this.props.attributes.forEach(attribute => {
             updatedEmployee[attribute] = React.findDOMNode(this.refs[attribute]).value.trim();
         });
@@ -13,7 +13,7 @@ class UpdateDialog extends React.Component {
     }
 
     render() {
-        var inputs = this.props.attributes.map(attribute =>
+        const inputs = this.props.attributes.map(attribute =>
                 <p key={this.props.employee.entity[attribute]}>
                     <input type="text" placeholder={attribute}
                            defaultValue={this.props.employee.entity[attribute]}
@@ -21,7 +21,7 @@ class UpdateDialog extends React.Component {
                 </p>
         );
 
-        var dialogId = "updateEmployee-" + this.props.employee.entity._links.self.href;
+        const dialogId = "updateEmployee-" + this.props.employee.entity._links.self.href;
 
         return (
             <div>

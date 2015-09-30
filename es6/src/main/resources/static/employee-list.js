@@ -1,12 +1,12 @@
-var React = require('react');
+const React = require('react');
 
-var Employee = require('./employee');
+const Employee = require('./employee');
 
 class EmployeeList extends React.Component {
 
     handleInput(e) {
         e.preventDefault();
-        var pageSize = React.findDOMNode(this.refs.pageSize).value;
+        const pageSize = React.findDOMNode(this.refs.pageSize).value;
         if (/^[0-9]+$/.test(pageSize)) {
             this.props.updatePageSize(pageSize);
         } else {
@@ -35,10 +35,10 @@ class EmployeeList extends React.Component {
     }
 
     render() {
-        var pageInfo = this.props.page.hasOwnProperty("number") ?
+        const pageInfo = this.props.page.hasOwnProperty("number") ?
             <h3>Employees - Page {this.props.page.number + 1} of {this.props.page.totalPages}</h3> : null;
 
-        var employees = this.props.employees.map(employee =>
+        const employees = this.props.employees.map(employee =>
                 <Employee key={employee.entity._links.self.href}
                           employee={employee}
                           attributes={this.props.attributes}
@@ -46,7 +46,7 @@ class EmployeeList extends React.Component {
                           onDelete={this.props.onDelete}/>
         );
 
-        var navLinks = [];
+        const navLinks = [];
         if ("first" in this.props.links) {
             navLinks.push(<button key="first" onClick={this.handleNavFirst.bind(this)}>&lt;&lt;</button>);
         }
