@@ -2,16 +2,18 @@ input.field {
     width: 90%;
 }
 
-table {
-    border-collapse: collapse;
+.table {
+    border-bottom:0px !important;
 }
-
-td, th {
-    border: 1px solid #999;
-    padding: 0.5rem;
-    text-align: left;
+.table th, .table td {
+    border: 1px !important;
 }
-
+.fixed-table-container {
+    border:0px !important;
+}
+th{
+    padding: 10px !important;
+}
 /*Classes for creating dialogs*/
 
 .modalDialog {

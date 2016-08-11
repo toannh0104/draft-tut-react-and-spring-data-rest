@@ -67,4 +67,3 @@ public class DatabaseLoader implements CommandLineRunner {
 		SecurityContextHolder.clearContext();
 	}
 }
-// end::code[]

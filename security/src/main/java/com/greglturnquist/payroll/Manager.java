@@ -36,28 +36,34 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 public class Manager {
 
-	public static final PasswordEncoder PASSWORD_ENCODER = new BCryptPasswordEncoder();
+    public static final PasswordEncoder PASSWORD_ENCODER = new BCryptPasswordEncoder();
 
-	private @Id @GeneratedValue Long id;
+    private
+    @Id
+    @GeneratedValue
+    Long id;
 
-	private String name;
+    private String name;
 
-	private @JsonIgnore String password;
+    private
+    @JsonIgnore
+    String password;
 
-	private String[] roles;
+    private String[] roles;
 
-	public void setPassword(String password) {
-		this.password = PASSWORD_ENCODER.encode(password);
-	}
+    public void setPassword(String password) {
+        this.password = PASSWORD_ENCODER.encode(password);
+    }
 
-	protected Manager() {}
+    protected Manager() {
+    }
 
-	public Manager(String name, String password, String... roles) {
+    public Manager(String name, String password, String... roles) {
 
-		this.name = name;
-		this.setPassword(password);
-		this.roles = roles;
-	}
+        this.name = name;
+        this.setPassword(password);
+        this.roles = roles;
+    }
 
 }
 // end::code[]

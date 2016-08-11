@@ -5,18 +5,29 @@
     <title>ReactJS + Spring Data REST</title>
     <script async="" data-main="/run.js" src="/bower_components/requirejs/require.js"></script>
     <link rel="stylesheet" href="/main.css" />
+
+    <link rel="stylesheet" href="https://getbootstrap.com/dist/css/bootstrap.min.css" />
 </head>
 <body>
-    <!-- tag::logout[] -->
-    <div>
-        Hello, <span th:text="${#authentication.name}">user</span>.
-        <form th:action="@{/logout}" method="post">
-            <input type="submit" value="Log Out"/>
-        </form>
+<div>
+    <div class="navbar navbar-inverse navbar-static-top" style="background-color:white;" >
+        <div class="container-fluid">
+            <header class="navbar-header">
+                <h2>Logo here</h2>
+            </header>
+            <div class="top-nav" style="float:right; padding-top: 10px;" >
+                <table>
+                    <tr>
+                        <td>Hi, <span th:text="${#authentication.name}">user</span>.</td>
+                        <td><form th:action="@{/logout}" method="post">
+                            <input class="btn-link" type="submit" value="Log Out"/>
+                        </form></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
     </div>
-    <!-- end::logout[] -->
-
     <div id="react"></div>
-
+</div>
 </body>
 </html>

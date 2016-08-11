@@ -32,34 +32,38 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-	@Autowired
-	private SpringDataJpaUserDetailsService userDetailsService;
+    @Autowired
+    private SpringDataJpaUserDetailsService userDetailsService;
 
-	@Override
-	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth
-			.userDetailsService(this.userDetailsService)
-				.passwordEncoder(Manager.PASSWORD_ENCODER);
-	}
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth
+                .userDetailsService(this.userDetailsService)
+                .passwordEncoder(Manager.PASSWORD_ENCODER);
+    }
 
-	@Override
-	protected void configure(HttpSecurity http) throws Exception {
-		http
-			.authorizeRequests()
-				.antMatchers("/bower_components/**", "/*.js",
-						"/*.jsx", "/main.css").permitAll()
-				.anyRequest().authenticated()
-				.and()
-			.formLogin()
-				.defaultSuccessUrl("/", true)
-				.permitAll()
-				.and()
-			.httpBasic()
-				.and()
-			.csrf().disable()
-			.logout()
-				.logoutSuccessUrl("/");
-	}
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http
+                .authorizeRequests()
+                    .antMatchers("/bower_components/**", "/*.js",
+                            "/*.jsx", "/main.css").permitAll()
+                    .anyRequest().authenticated()
+                    .and()
+                .formLogin()
+                    .loginPage("/login")
+                    .permitAll()
+                    .and()
+//                    .defaultSuccessUrl("/", true)
+//                    .permitAll()
+//                .and()
+//                .httpBasic()
+//                .and()
+                .csrf().disable()
+                .logout()
+                    .logoutSuccessUrl("/login")
+                    .permitAll();
+    }
 
 }
 // end::code[]
